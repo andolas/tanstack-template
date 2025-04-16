@@ -194,86 +194,43 @@ function Home() {
   )
 
   return (
-    <div className="relative flex h-screen bg-gray-900">
-      {/* SWOT Form */}
-      <div className="absolute top-5 left-5 z-50 bg-white p-4 rounded shadow max-w-md w-full">
-        <h2 className="font-bold text-lg mb-2 text-gray-800">Analisi SWOT gratuita</h2>
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault()
-            const form = e.currentTarget
-            const email = form.email.value
-            const idea = form.idea.value
+  <div className="flex justify-center items-center h-screen bg-gray-900">
+    <div className="bg-white p-6 rounded shadow max-w-md w-full">
+      <h1 className="text-2xl font-bold mb-4 text-gray-800 text-center">Analisi SWOT gratuita</h1>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault()
+          const form = e.currentTarget
+          const email = form.email.value
+          const idea = form.idea.value
 
-            try {
-              const res = await fetch("https://script.google.com/macros/s/AKfycbwfYVjX40hJBeEQOBH_gOe4471P6eDmPfCChq0b5WjENEC_YB8ec2ldc69Ahl-nwvye/exec", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, idea })
-              })
+          try {
+            const res = await fetch("https://script.google.com/macros/s/AKfycbwfYVjX40hJBeEQOBH_gOe4471P6eDmPfCChq0b5WjENEC_YB8ec2ldc69Ahl-nwvye/exec", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, idea })
+            })
 
-              if (res.ok) {
-                alert("✅ Analisi inviata! Controlla la tua email.")
-                form.reset()
-              } else {
-                alert("❌ Errore nell'invio.")
-              }
-            } catch {
-              alert("⚠️ Errore di rete.")
+            if (res.ok) {
+              alert("✅ Analisi inviata! Controlla la tua email.")
+              form.reset()
+            } else {
+              alert("❌ Errore nell'invio.")
             }
-          }}
-        >
-          <input name="email" type="email" placeholder="La tua email" required className="mb-2 p-2 border w-full rounded" />
-          <textarea name="idea" placeholder="Descrivi la tua idea di business" required rows={4} className="mb-2 p-2 border w-full rounded" />
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700">
-            Ricevi SWOT
-          </button>
-        </form>
-      </div>
-
-      {/* Sidebar & Main Content */}
-      <Sidebar
-        conversations={conversations}
-        currentConversationId={currentConversationId}
-        handleNewChat={createNewConversation}
-        setCurrentConversationId={setCurrentConversationId}
-        handleDeleteChat={deleteConversation}
-        editingChatId={editingChatId}
-        setEditingChatId={setEditingChatId}
-        editingTitle={editingTitle}
-        setEditingTitle={setEditingTitle}
-        handleUpdateChatTitle={updateConversationTitle}
-      />
-      <div className="flex flex-col flex-1">
-        {!isAnthropicKeyDefined && (
-          <div className="w-full max-w-3xl px-2 py-2 mx-auto mt-4 mb-2 font-medium text-center text-white bg-orange-500 rounded-md">
-            <p>This app requires an Anthropic API key.</p>
-          </div>
-        )}
-        {error && (
-          <p className="w-full max-w-3xl p-4 mx-auto font-bold text-orange-500">{error}</p>
-        )}
-        {currentConversationId ? (
-          <>
-            <div ref={messagesContainerRef} className="flex-1 pb-24 overflow-y-auto">
-              <div className="w-full max-w-3xl px-4 mx-auto">
-                {[...messages, pendingMessage]
-                  .filter((message): message is Message => message !== null)
-                  .map((message) => (
-                    <ChatMessage key={message.id} message={message} />
-                  ))}
-                {isLoading && <LoadingIndicator />}
-              </div>
-            </div>
-            <ChatInput input={input} setInput={setInput} handleSubmit={handleSubmit} isLoading={isLoading} />
-          </>
-        ) : (
-          <WelcomeScreen input={input} setInput={setInput} handleSubmit={handleSubmit} isLoading={isLoading} />
-        )}
-      </div>
-      <SettingsDialog isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+          } catch {
+            alert("⚠️ Errore di rete.")
+          }
+        }}
+      >
+        <input name="email" type="email" placeholder="La tua email" required className="mb-3 p-2 border w-full rounded" />
+        <textarea name="idea" placeholder="Descrivi la tua idea di business" required rows={5} className="mb-3 p-2 border w-full rounded" />
+        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700">
+          Ricevi la tua analisi SWOT
+        </button>
+      </form>
     </div>
-  )
+  </div>
+)
 }
 
 export const Route = createFileRoute('/')({
