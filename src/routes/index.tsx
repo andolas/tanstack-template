@@ -42,3 +42,6 @@ export function WelcomeScreen({ input, setInput, handleSubmit, isLoading }: Prop
     </div>
   )
 }
+export const Route = createFileRoute('/')({
+  component: WelcomeScreen,
+})
