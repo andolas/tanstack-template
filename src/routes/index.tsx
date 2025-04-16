@@ -47,7 +47,7 @@ function Home() {
   }, [messages, isLoading, scrollToBottom])
 
   const createTitleFromInput = useCallback((text: string) => {
-    const words = text.trim().split(/\\s+/)
+    const words = text.trim().split(/\s+/)
     const firstThreeWords = words.slice(0, 3).join(' ')
     return firstThreeWords + (words.length > 3 ? '...' : '')
   }, [])
@@ -279,5 +279,6 @@ function Home() {
 export const Route = createFileRoute('/')({
   component: Home
 })
+
 
 
