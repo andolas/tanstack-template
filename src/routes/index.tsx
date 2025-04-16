@@ -302,9 +302,3 @@ export const Route = createFileRoute('/')({
   component: Home,
 })
 '''
-
-# Salvo in file .tsx
-tsx_path = Path("/mnt/data/index.tsx")
-tsx_path.write_text(tsx_code)
-
-tsx_path.name
